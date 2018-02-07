@@ -101,7 +101,7 @@ function httpHandler(req, res) {
   switch(req.method)
   {
     case 'GET':
-     
+
       var basedir = __dirname
       var isIndexFile = /^\/(index\.html)?(\?|$)/.test(req.url);
       var isStaticContent = /^\/(imd_static)\/\.*/.test(req.url);
@@ -110,10 +110,10 @@ function httpHandler(req, res) {
 
       addSecurityHeaders(req, res, isIndexFile);
 
-      // Only server content from the base folder tree if allowed
+      // Only serve content from the base folder tree if allowed
       if (process.env.INSTANT_MARKDOWN_SERVE_FOLDER_TREE &&
         !(isStaticContent || isIndexFile)) {
-        basedir = process.cwd(); 
+        basedir = process.cwd();
       }
 
       // Otherwise serve the file from the directory this module is in
@@ -133,7 +133,7 @@ function httpHandler(req, res) {
       res.writeHead(200);
       res.end();
       break;
-q
+
     default:
   }
 }
@@ -145,15 +145,7 @@ io.sockets.on('connection', function(sock){
   }
 });
 
-
 function onListening() {
-  if (os.platform() === 'win32') {
-    exec('start /b http://localhost:8090', function(error, stdout, stderr){});
-  } else if (os.platform() === 'darwin') {
-    exec('open -g http://localhost:8090', function(error, stdout, stderr){});
-  } else { // assume unix/linux
-    exec('xdg-open http://localhost:8090', function(error, stdout, stderr){});
-  }
   readAllInput(process.stdin, function(body) {
     writeMarkdown(body);
   });
